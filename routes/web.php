@@ -17,9 +17,9 @@ use App\Http\Controllers\AuthenticationController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('buyairtime',[BillingController::class, 'buyairtime'])->name('buyairtime');
 Route::get('qtrx',[BillingController::class, 'qtrx'])->name('qtrx');
@@ -32,7 +32,7 @@ Route::get('/clear-cache', function() {
 
 
 
-Route::get('/agents/index', [RoutingController::class, 'Authcheck'])->name('Authcheck');
+Route::get('/', [RoutingController::class, 'Authcheck'])->name('Authcheck');
 Route::get('/admin/index', [RoutingController::class, 'Authcheck2'])->name('Authcheck2');
 Route::get('/agents/dashboard', [AuthenticationController::class, 'users'])->name('users');
 Route::post('users', [AuthenticationController::class, 'users'])->name('users');

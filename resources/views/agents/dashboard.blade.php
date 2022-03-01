@@ -1,14 +1,49 @@
-@extends('layouts.master')
+@extends('layouts.agents')
 @section('content')
+<div class="d-none d-sm-block topbar-divider"></div>
+<li class="nav-item dropdown no-arrow">
+    <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">{{$name}}</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
+        <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Settings</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activity log</a>
+            <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
+        </div>
+    </div>
+</li>
+</ul>
+</div>
+</nav>
 <div class="container-fluid">
                     <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                        <h3 class="text-dark mb-0">Admin Dashboard</h3>
+                        <h6 class="text-dark mb-0">Agent Dashboard </h6>
+                        <p class="text-dark mb-0">Account Number: {{$account_number}}</p>
                     </div>
+                    @if (session('success'))
+                        <div class="col-sm-12">
+                            <div class="alert  alert-success alert-dismissible fade show" role="alert">
+                                {{ session('success') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                            </div>
+                        </div>
+                    @endif
                     <div class="row">
-                        <div class="col-md-6 col-xl-3 mb-4" style="width: 388.25px;">
-                            <div class="card shadow border-start-primary py-2" style="width: 307px;">
+                        <div class="col-md-6 col-xl-3 mb-4" >
+                            <div class="card shadow border-start-primary py-2" >
                                 <div class="card-body">
-                                    <div class="row align-items-center no-gutters" style="width: 284px;">
+                                    <div class="row align-items-center no-gutters" >
+                                        <div class="col me-2">
+                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Account Balance</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>N0</span></div>
+                                        </div>
+                                        <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4" >
+                            <div class="card shadow border-start-primary py-2" >
+                                <div class="card-body">
+                                    <div class="row align-items-center no-gutters" >
                                         <div class="col me-2">
                                             <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Total profit</span></div>
                                             <div class="text-dark fw-bold h5 mb-0"><span>N40,000</span></div>
@@ -18,25 +53,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-xl-3 mb-4" style="width: 388.25px;">
-                            <div class="card shadow border-start-success py-2" style="width: 323px;padding: 8px 0px;">
-                                <div class="card-body" style="width: 282px;">
-                                    <div class="row align-items-center no-gutters" style="width: 276px;">
-                                        <div class="col me-2" style="width: 261px;">
-                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Total(in)</span></div>
-                                            <div class="text-dark fw-bold h5 mb-0"><span>N140,000</span></div>
+                        <div class="col-md-6 col-xl-3 mb-4" >
+                            <div class="card shadow border-start-success py-2" >
+                                <div class="card-body" >
+                                    <div class="row align-items-center no-gutters" >
+                                        <div class="col me-2" >
+                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Transactions(in)</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0  me-3"><span>N140,000</span></div>
                                         </div>
-                                        <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300" style="width: 0px;"></i></div>
+                                        <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300" ></i></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 col-xl-3 mb-4">
-                            <div class="card shadow border-start-info py-2" style="width: 301px;">
+                            <div class="card shadow border-start-info py-2" >
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
-                                            <div class="text-uppercase text-info fw-bold text-xs mb-1"><span style="color: var(--bs-pink);">total (out)</span></div>
+                                            <div class="text-uppercase text-info fw-bold text-xs mb-1"><span style="color: var(--bs-pink);">Transactions(out)</span></div>
                                             <div class="row g-0 align-items-center">
                                                 <div class="col-auto">
                                                     <div class="text-dark fw-bold h5 mb-0 me-3"><span>N100,000</span></div>
@@ -49,51 +84,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="padding-bottom: 42px;">
-                        <div class="col-md-6 col-xl-3 mb-4" style="width: 388.25px;">
-                            <div class="card shadow border-start-primary py-2" style="width: 307px;">
-                                <div class="card-body">
-                                    <div class="row align-items-center no-gutters" style="width: 284px;">
-                                        <div class="col me-2">
-                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>total agents</span></div>
-                                            <div class="text-dark fw-bold h5 mb-0"><span>4,000</span></div>
-                                        </div>
-                                        <div class="col-auto"><i class="fas fa-user-tie fa-2x text-gray-300"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-3 mb-4" style="width: 388.25px;padding-right: 14px;padding-left: 10px;">
-                            <div class="card shadow border-start-success py-2" style="width: 323px;padding: 8px 0px;">
-                                <div class="card-body" style="width: 282px;">
-                                    <div class="row align-items-center no-gutters" style="width: 276px;">
-                                        <div class="col me-2" style="width: 261px;">
-                                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span style="color: rgb(0,6,4);">Total users</span></div>
-                                            <div class="text-dark fw-bold h5 mb-0"><span>5000</span></div>
-                                        </div>
-                                        <div class="col-auto"><i class="fas fa-user-friends fa-2x text-gray-300" style="width: 0px;"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-3 mb-4">
-                            <div class="card shadow border-start-info py-2" style="width: 301px;">
-                                <div class="card-body">
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col me-2">
-                                            <div class="text-uppercase text-info fw-bold text-xs mb-1"><span style="color: var(--bs-pink);">pending request</span></div>
-                                            <div class="row g-0 align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="text-dark fw-bold h5 mb-0 me-3"><span>10</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto"><i class="fas fa-caret-square-down fa-2x text-gray-300"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
 <div class="container-fluid">
                     <div class="card shadow">

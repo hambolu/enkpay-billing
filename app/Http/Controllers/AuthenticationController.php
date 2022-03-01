@@ -21,24 +21,22 @@ class AuthenticationController extends Controller
                     ]);
         $r = $response->json();
         //dd($r);
+        $user = $r['data'];
+        
         if($r['success'] == true)
         {
-            return view('agents.dashboard');
+            $name = $user['name'];
+            $account_number = $user['account_number'];
+            //return view('agents.dashboard',compact('name','account_number'));
+            return view('agents.dashboard',compact('name','account_number'))->with('success', 'Successfully! Welcome Back..');
         }else{
-            return view('agents.index');
+            return view('agents.index')->with('error', 'Invalid Credentials');
         }
-        // return view('agents.index');
     }
     
     public  function Authcheck2()
     {
-        // if(Auth::user()->role_type == 2)
-        // {
-        //     return view('users.index');
-        // }
-        // elseif(Auth::user()->role_type == 1)
-        // {
-        //}
+       
             return view('admin.index');
     }
 }
