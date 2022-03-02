@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Models\Billing;
 use Auth;
 
 
@@ -27,8 +28,9 @@ class AuthenticationController extends Controller
         {
             $name = $user['name'];
             $account_number = $user['account_number'];
-            //return view('agents.dashboard',compact('name','account_number'));
-            return view('agents.dashboard',compact('name','account_number'))->with('success', 'Successfully! Welcome Back..');
+            $account_balance = $user['account_balance'];
+            $trx = Billing::all();
+            return view('agents.dashboard',compact('name','account_number','account_balance','trx'))->with('success', 'Successfully! Welcome Back..');
         }else{
             return view('agents.index')->with('error', 'Invalid Credentials');
         }

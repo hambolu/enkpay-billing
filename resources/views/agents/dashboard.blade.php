@@ -33,7 +33,7 @@
                                     <div class="row align-items-center no-gutters" >
                                         <div class="col me-2">
                                             <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Account Balance</span></div>
-                                            <div class="text-dark fw-bold h5 mb-0"><span>N0</span></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><span>N{{number_format($account_balance,2)}}</span></div>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
                                     </div>
@@ -109,84 +109,32 @@
                                 <table class="table my-0" id="dataTable">
                                     <thead>
                                         <tr>
-                                            <th>Transaction ID</th>
+                                            
                                             <th>Transaction Type</th>
                                             <th>Amount</th>
-                                            <th>Agent/User</th>
-                                            <th>Date</th>
                                             <th>Status</th>
+                                            <th>Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @forelse ($trx as $trxs)
                                         <tr>
-                                            <td>TXSHDHDS2636POS</td>
-                                            <td>CASH-OUT</td>
-                                            <td>4,989</td>
-                                            <td>Akin</td>
-                                            <td>12/01/2022</td>
-                                            <td style="border-radius: 10;border-style: solid;border-color: rgb(3,129,0);color: rgb(1,119,6);">Successful</td>
+                                            <td>{{ $trxs->billing_type}}</td>
+                                            <td>{{ $trxs->amount}}</td>
+                                            <td>
+                                                @if($trxs->status != null)
+                                                    <p style="background:rgb(1,119,6); text-align:center; color: white; border-radius:5%; width:100px;"> Completed </p>
+                                                @endif
+                                            </td>
+                                            <td>{{ $trxs->created_at}}</td>
+                                            
                                         </tr>
-                                        <tr>
-                                            <td>TXSHDHDS2636RE<br></td>
-                                            <td>MTN RECHARGE CARD<br></td>
-                                            <td>100</td>
-                                            <td>Akin</td>
-                                            <td>12/01/2022<br></td>
-                                            <td style="border-radius: 10;border-style: solid;border-color: rgb(3,129,0);color: rgb(1,119,6);">Successful <br></td>
-                                        </tr>
-                                        <tr></tr>
-                                        <tr>
-                                            <td>TXSHDG556636DA<br></td>
-                                            <td>AIRTEL DATA<br></td>
-                                            <td>2,500</td>
-                                            <td>Bello<br></td>
-                                            <td>10/01/2022<br></td>
-                                            <td style="border-radius: 10;border-style: solid;border-color: rgb(3,129,0);color: rgb(1,119,6);">Successful<br></td>
-                                        </tr>
-                                        <tr>
-                                            <td>TXSHDG556636CA<br></td>
-                                            <td>GOTV</td>
-                                            <td>3,500</td>
-                                            <td>Kola</td>
-                                            <td>10/01/2022<br></td>
-                                            <td style="border-radius: 10;border-style: solid;border-color: rgb(3,129,0);color: rgb(1,119,6);">Successful<br></td>
-                                        </tr>
-                                        <tr>
-                                            <td>TXSHDG556636TR<br></td>
-                                            <td>BANK TRANSFER</td>
-                                            <td>5,000</td>
-                                            <td>Ben</td>
-                                            <td>06/01/2022<br></td>
-                                            <td style="border-radius: 10;border-style: solid;border-color: rgb(3,129,0);color: rgb(1,119,6);">Successful<br></td>
-                                        </tr>
-                                        <tr></tr>
-                                        <tr>
-                                            <td>TXSHDHDS2636POS<br></td>
-                                            <td>CASH-OUT</td>
-                                            <td>15,495</td>
-                                            <td>Akin</td>
-                                            <td>04/01/2022<br></td>
-                                            <td style="border-radius: 10;color: rgb(183,0,22);border-style: solid;border-color: rgb(205,4,64);">Failed<br></td>
-                                        </tr>
-                                        <tr>
-                                            <td>TXSHDHDS2636POS<br></td>
-                                            <td>CASH-OUT</td>
-                                            <td>985</td>
-                                            <td>Basmus</td>
-                                            <td>04/01/2022<br></td>
-                                            <td style="border-radius: 10;color: rgb(183,0,22);border-style: solid;border-color: rgb(205,4,64);">Failed</td>
-                                        </tr>
+                                        @empty
+                                            
+                                        @endforelse
+                                        
                                     </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td><strong>Transaction ID<br></strong></td>
-                                            <td><strong>Transaction Type<br></strong></td>
-                                            <td><strong>Amount<br></strong></td>
-                                            <td><strong>Agent/User<br></strong></td>
-                                            <td><strong>Date<br></strong></td>
-                                            <td><strong>Status<br></strong></td>
-                                        </tr>
-                                    </tfoot>
+                                    
                                 </table>
                             </div>
                             <div class="row">

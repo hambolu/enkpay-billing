@@ -5,6 +5,7 @@ use App\Http\Controllers\BillingController;
 use App\Http\Controllers\Billing2Controller;
 use App\Http\Controllers\RoutingController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\AgentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,7 @@ Route::get('/clear-cache', function() {
 });
 
 
-
+Route::get('/agents/dashboard', [AgentsController::class, 'transactions'])->name('transactions');
 Route::get('/', [RoutingController::class, 'Authcheck'])->name('Authcheck');
 Route::get('/admin/index', [RoutingController::class, 'Authcheck2'])->name('Authcheck2');
 Route::get('/agents/dashboard', [AuthenticationController::class, 'users'])->name('users');
