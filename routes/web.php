@@ -18,9 +18,9 @@ use App\Http\Controllers\AgentsController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/test', function () {
+    return view('test');
+});
 
 Route::get('buyairtime',[BillingController::class, 'buyairtime'])->name('buyairtime');
 Route::get('qtrx',[BillingController::class, 'qtrx'])->name('qtrx');
@@ -31,7 +31,7 @@ Route::get('/clear-cache', function() {
     return "Cache is cleared";
 });
 
-
+Route::post('gotv',[Billing2Controller::class, 'gotv'])->name('gotv');
 Route::get('/agents/dashboard', [AgentsController::class, 'transactions'])->name('transactions');
 Route::get('/', [RoutingController::class, 'Authcheck'])->name('Authcheck');
 Route::get('/admin/index', [RoutingController::class, 'Authcheck2'])->name('Authcheck2');

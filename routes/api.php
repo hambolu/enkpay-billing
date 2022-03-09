@@ -26,6 +26,7 @@ Route::get('balance',[BillingController::class, 'balance'])->name('balance');
 Route::get('buyairtime',[BillingController::class, 'buyairtime'])->name('buyairtime');
 Route::get('databundle',[BillingController::class, 'databundle'])->name('databundle');
 Route::get('cablesub',[BillingController::class, 'cablesub'])->name('cablesub');
+Route::get('electricbill',[BillingController::class, 'electricbill'])->name('electricbill');
 Route::post('vcard',[BillingController::class, 'vcard'])->name('vcard');
 Route::get('checkip',[BillingController::class, 'checkip'])->name('checkip');
 
@@ -48,6 +49,21 @@ Route::post('mtnAirtime',[Billing2Controller::class, 'mtnAirtime'])->name('mtnAi
 
 
 //VAS DATA
+Route::post('glodata',[Billing2Controller::class, 'glodata'])->name('glodata');
+Route::post('mtndata',[Billing2Controller::class, 'mtndata'])->name('mtndata');
+Route::post('airteldata',[Billing2Controller::class, 'airteldata'])->name('airteldata');
+Route::post('etisalatdata',[Billing2Controller::class, 'etisalatdata'])->name('etisalatdata');
+
+//VAS Cable
+Route::post('gotv',[Billing2Controller::class, 'gotv'])->name('gotv');
+Route::post('dstv',[Billing2Controller::class, 'dstv'])->name('dstv');
+Route::post('startimes',[Billing2Controller::class, 'startimes'])->name('startimes');
+
+//VAS ElectricCompany
+Route::post('ibedc',[Billing2Controller::class, 'ibedc'])->name('ibedc');
+Route::post('iedcpostpaid',[Billing2Controller::class, 'iedcpostpaid'])->name('iedcpostpaid');
+
+
 
 Route::get('/clear-cache', function() {
     Artisan::call('cache:clear');

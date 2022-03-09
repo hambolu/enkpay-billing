@@ -23,6 +23,17 @@ class BillingController extends Controller
     private $username;
     private $password;
     private $accountId;
+
+    $response = Http::withToken('1|M1qGO2aeP0Q2MF5uI1SgmqSUGVxRPHPy0g1507eP')
+                ->accept('application/json')
+                ->post('https://auth.enkwave.com/public/api/auth/login',[
+                    "phone" => $request->input('phone'),
+                    "password" => $request->input('password')
+                    ]);
+        $r = $response->json();
+        //dd($r);
+        $user = $r['data'];
+    private $user;
     
     public function __construct()
     {
@@ -33,6 +44,7 @@ class BillingController extends Controller
         
         $this->apiKey = 'Q9I77D0G0YJ0RD8EU225G837CV5H12T1T7WTZYQJM12K44T382RISV6O45J718U3';
         $this->userid = 'CK100388439';  
+        $this->user = $user['account_balance'];
     }
     public function balance(){
 
@@ -209,6 +221,47 @@ class BillingController extends Controller
         }
     }
     
+    public function electricbill(Request $request)
+    {
+        $MeterType = $request->input('MeterType');
+        $ElectricCompany = $request->input('ElectricCompany');
+        $number = $request->input('number');
+        $MeterNo = $request->input('MeterNo');
+        $amount = $request->input('Amount');
+        //dd($cabletv,$smartcardno);
+        $r = $response = Http::get('https://www.nellobytesystems.com/APIElectricityV1.asp?',[
+            "UserID"=>$this->userid,
+            "APIKey"=>$this->apiKey,
+            "MeterType"=> $MeterType,
+            "ElectricCompany"=> $ElectricCompany,
+            "MeterNo"=>$MeterNo,
+            "Amount"=>$amount,
+            "PhoneNo"=>$number,
+            "CallBackURL"=> "https://erkpay.oucheshosting.com/"
+        ]);
+        $r = $response->json();
+        
+        $billing = new Billing();
+        $billing->billing_type = "Cable Sub";
+        $billing->smartcardno   = $request->input('smartcardno');
+        $billing->cabletv       = $request->input('cabletv');
+        $billing->cable_type        = $request->input('package');
+        $billing->phone       = $request->input('number');
+        $billing->orderid       = $r['orderid'];
+        $billing->statuscode       = $r['statuscode'];
+        $billing->status       = $r['status'];
+        $billing->user_id       = $request->input('user_id');
+        
+        //dd($billing);
+        $billing->save();
+        
+        if ($this->successStatus == true) {
+            return response()->json(["status" => $this->successStatus, 'data'=> $r])->setStatusCode(Response::HTTP_OK, Response::$statusTexts[Response::HTTP_OK]);
+        }else{
+            return response()->json(["status" => $this->failedStatus,'error' => 'Unauthorised'], 401);
+        }
+    }
+
     public function vcard(Request $request)
     {
         $cabletv = $request->input('cabletv');
