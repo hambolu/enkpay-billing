@@ -48,6 +48,9 @@ Route::post('airtelAirtime',[Billing2Controller::class, 'airtelAirtime'])->name(
 Route::post('mtnAirtime',[Billing2Controller::class, 'mtnAirtime'])->name('mtnAirtime');
 
 
+Route::post('testapi',[Billing2Controller::class, 'testapi'])->name('testapi');
+
+
 //VAS DATA
 Route::post('glodata',[Billing2Controller::class, 'glodata'])->name('glodata');
 Route::post('mtndata',[Billing2Controller::class, 'mtndata'])->name('mtndata');

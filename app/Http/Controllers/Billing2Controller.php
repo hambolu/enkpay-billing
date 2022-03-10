@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use App\Models\Billing;
+use App\clubconnect\AirtimeClubconnect;
 
 
 class Billing2Controller extends Controller
@@ -155,6 +156,7 @@ class Billing2Controller extends Controller
         
         $phone = $request->input('phone');
         $amount = $request->input('amount');
+        $mobilenetwork = "03";
         $uuid = $request->input('uuid');
         
         $trx = array(
@@ -232,6 +234,8 @@ class Billing2Controller extends Controller
         }else{
             return response()->json(["status" => $this->failedStatus,'error' => 'Unauthorised'], 401);
         }
+        $airtimeClubconnect = new AirtimeClubconnect();
+        $airtimeClubconnect->buyairtime($phone,$amount,$mobilenetwork);
     }
     
     public function gloAirtime(Request $request)
@@ -1344,6 +1348,76 @@ class Billing2Controller extends Controller
         }else{
             return response()->json(["status" => $this->failedStatus,'error' => 'Unauthorised'], 401);
         }
+    }
+
+    public function testapi(Request $request)
+    {
+
+        $phone = $request->input('phone');
+        $amount = $request->input('amount');
+        $billerCode = $request->input('billerCode');
+        $productId = $request->input('productId');
+        $trx = array(
+            "billerCode" => $billerCode,
+               "productId" => $productId,
+           "transDetails" => array(
+                   array(
+                   "fieldName" => "Email",
+                   "fieldValue" => "toluadejimi@gmail.com",
+                   "fieldControlType" => "TEXTBOX"
+                   ),
+                   array(
+                   "fieldName" => "Phone Number",
+                   "fieldValue" => $phone,
+                   "fieldControlType" => "TEXTBOX"
+                   ),
+                   array(
+                   "fieldName" => "Amount",
+                   "fieldValue" => $amount,
+                   "fieldControlType" => "TEXTBOX"
+                   ),
+                   array(
+                   "fieldName" => "Product",
+                   "fieldValue" => "AIRTIME",
+                   "fieldControlType" => "LOOKUP"
+                   )
+                   
+               ),
+           );
+           
+   //dd($trx);
+   $tx = json_encode($trx);
+   $curl = curl_init();
+
+   //'webkey: 08879be159ca4da0be92a32d36401219',
+               //'accountId: 100011860',
+     curl_setopt($curl, CURLOPT_URL, 'https://reseller.payxpress.com/api/process-transaction');
+     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+     curl_setopt($curl, CURLOPT_ENCODING, '');
+     curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
+     curl_setopt($curl, CURLOPT_TIMEOUT, 0);
+     curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+     curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
+     curl_setopt($curl, CURLOPT_POSTFIELDS, $tx);
+     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+               'Content-Type: application/json',
+               'webkey: d0918b76c6dc4991b7c51db9f062b7a5',
+               'accountId: 100011860',
+               'Authorization: Basic dG9sdS5hZGVqaW1pQGVua3dhdmUuY29tOlRvbHVsb3BlMjU4MEA='
+             )
+   );
+   
+   $response = curl_exec($curl);
+   
+   curl_close($curl);
+    $r = json_decode($response);
+
+    if ($this->successStatus == true) {
+        return response()->json(["status" => $this->successStatus, 'data'=> $r])->setStatusCode(Response::HTTP_OK, Response::$statusTexts[Response::HTTP_OK]);
+    }else{
+        return response()->json(["status" => $this->failedStatus,'error' => 'Unauthorised'], 401);
+    }
     }
     
 }
